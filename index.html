@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Y2K Garage Sale - Curated Nostalgic Tech & Toys</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --lavender: #c4b5fd;
+            --lavender-deep: #a78bfa;
+            --peach: #fcd5ce;
+            --peach-deep: #f9a89c;
+            --mint: #a7f3d0;
+            --mint-deep: #6ee7b7;
+            --butter: #fef08a;
+            --butter-deep: #fde047;
+            --sky: #a5f3fc;
+            --sky-deep: #67e8f9;
+            --blush: #fecdd3;
+            --blush-deep: #fda4af;
+            --cream: #fefce8;
+            --black: #18181b;
+            --gray: #71717a;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, sans-serif;
+            background: var(--cream);
+            color: var(--black);
+            line-height: 1.5;
+        }
+
+        /* ============================================
+           HEADER
+           ============================================ */
+        header {
+            background: var(--lavender);
+            border-bottom: 4px solid var(--black);
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 14px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-mark {
+            width: 46px;
+            height: 46px;
+            background: var(--white);
+            border: 3px solid var(--black);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 3px 3px 0 var(--black);
+        }
+
+        .logo-text {
+            font-family: 'Space Mono', monospace;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--black);
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-link {
+            padding: 10px 16px;
+            color: var(--black);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            border-radius: 8px;
+            transition: background 0.15s;
+        }
+
+        .nav-link:hover {
+            background: rgba(255,255,255,0.5);
+        }
+
+        .nav-btn {
+            padding: 10px 20px;
+            background: var(--black);
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            border-radius: 10px;
+            border: 3px solid var(--black);
+            box-shadow: 3px 3px 0 var(--lavender-deep);
+            transition: all 0.1s;
+        }
+
+        .nav-btn:hover {
+            transform: translate(1px, 1px);
+            box-shadow: 2px 2px 0 var(--lavender-deep);
+        }
+
+        /* ============================================
+           HERO
+           ============================================ */
+        .hero {
+            background: linear-gradient(180deg, var(--lavender) 0%, var(--peach) 100%);
+            border-bottom: 4px solid var(--black);
+            padding: 56px 24px;
+        }
+
+        .hero-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 48px;
+        }
+
+        .hero-content {
+            flex: 1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--white);
+            color: var(--black);
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 50px;
+            border: 2px solid var(--black);
+            margin-bottom: 20px;
+        }
+
+        .hero-badge .dot {
+            width: 8px;
+            height: 8px;
+            background: var(--mint-deep);
+            border-radius: 50%;
+        }
+
+        .hero h1 {
+            font-family: 'Space Mono', monospace;
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--black);
+            line-height: 1.1;
+            margin-bottom: 16px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--black);
+            opacity: 0.8;
+            max-width: 480px;
+        }
+
+        .hero-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .stat-card {
+            background: var(--white);
+            border: 3px solid var(--black);
+            border-radius: 16px;
+            padding: 20px 32px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: 4px 4px 0 var(--black);
+        }
+
+        .stat-card .number {
+            font-family: 'Space Mono', monospace;
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--lavender-deep);
+            line-height: 1;
+        }
+
+        .stat-card .label {
+            font-size: 14px;
+            color: var(--gray);
+            font-weight: 500;
+        }
+
+        /* ============================================
+           CATEGORY NAV
+           ============================================ */
+        .category-nav {
+            background: var(--white);
+            border-bottom: 4px solid var(--black);
+            padding: 16px 24px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .category-nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+        }
+
+        .cat-btn {
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            border: 3px solid var(--black);
+            border-radius: 50px;
+            text-decoration: none;
+            color: var(--black);
+            white-space: nowrap;
+            transition: all 0.15s;
+            box-shadow: 3px 3px 0 var(--black);
+        }
+
+        .cat-btn:hover {
+            transform: translate(1px, 1px);
+            box-shadow: 2px 2px 0 var(--black);
+        }
+
+        .cat-btn.gaming { background: var(--lavender); }
+        .cat-btn.apple { background: var(--blush); }
+        .cat-btn.toys { background: var(--butter); }
+        .cat-btn.phones { background: var(--sky); }
+
+        /* ============================================
+           MAIN
+           ============================================ */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        /* ============================================
+           SECTION
+           ============================================ */
+        .section {
+            margin-bottom: 56px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .section-title .icon {
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            border: 3px solid var(--black);
+            border-radius: 12px;
+            box-shadow: 3px 3px 0 var(--black);
+        }
+
+        .section-title.gaming .icon { background: var(--lavender); }
+        .section-title.apple .icon { background: var(--blush); }
+        .section-title.toys .icon { background: var(--butter); }
+        .section-title.phones .icon { background: var(--sky); }
+
+        .section-title h2 {
+            font-family: 'Space Mono', monospace;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .section-title .count {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--gray);
+        }
+
+        .section-link {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--black);
+            text-decoration: none;
+            padding: 10px 18px;
+            background: var(--white);
+            border: 2px solid var(--black);
+            border-radius: 8px;
+            transition: all 0.15s;
+        }
+
+        .section-link:hover {
+            background: var(--butter);
+        }
+
+        /* ============================================
+           PRODUCT GRID
+           ============================================ */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        @media (max-width: 1000px) {
+            .product-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        @media (max-width: 700px) {
+            .product-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        .product-card {
+            background: var(--white);
+            border: 3px solid var(--black);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 4px 4px 0 var(--black);
+            transition: all 0.15s;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0 var(--black);
+        }
+
+        .product-image {
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            border-bottom: 3px solid var(--black);
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 12px;
+        }
+
+        .product-image.gaming { background: var(--lavender); }
+        .product-image.apple { background: var(--blush); }
+        .product-image.toys { background: var(--butter); }
+        .product-image.phones { background: var(--sky); }
+
+        .badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 5px 12px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            border-radius: 6px;
+            border: 2px solid var(--black);
+        }
+
+        .badge-hot { background: var(--blush-deep); color: var(--black); }
+        .badge-rare { background: var(--lavender-deep); color: var(--white); }
+        .badge-deal { background: var(--mint-deep); color: var(--black); }
+        .badge-mint { background: var(--sky-deep); color: var(--black); }
+
+        .product-info {
+            padding: 16px;
+        }
+
+        .product-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .product-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--gray);
+            padding-top: 12px;
+            border-top: 2px dashed #e4e4e7;
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 16px;
+            background: var(--cream);
+            border-top: 3px solid var(--black);
+        }
+
+        .product-price {
+            font-family: 'Space Mono', monospace;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--black);
+        }
+
+        .product-btn {
+            background: var(--black);
+            color: var(--white);
+            border: none;
+            padding: 10px 18px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .product-btn:hover {
+            background: var(--lavender-deep);
+        }
+
+        /* ============================================
+           LOADING STATE
+           ============================================ */
+        .loading-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 48px 24px;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 32px;
+            height: 32px;
+            border: 4px solid var(--lavender);
+            border-top-color: var(--black);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 12px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-size: 14px;
+            color: var(--gray);
+            font-weight: 500;
+        }
+
+        .error-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 48px 24px;
+            color: var(--gray);
+        }
+
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 48px 24px;
+            color: var(--gray);
+            font-size: 15px;
+        }
+
+        /* ============================================
+           NEWSLETTER
+           ============================================ */
+        .newsletter {
+            background: var(--mint);
+            border: 4px solid var(--black);
+            border-radius: 24px;
+            padding: 48px;
+            margin: 56px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 40px;
+            box-shadow: 6px 6px 0 var(--black);
+        }
+
+        .newsletter-content h3 {
+            font-family: 'Space Mono', monospace;
+            font-size: 28px;
+            color: var(--black);
+            margin-bottom: 8px;
+        }
+
+        .newsletter-content p {
+            font-size: 16px;
+            color: var(--black);
+            opacity: 0.7;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 12px;
+        }
+
+        .newsletter-input {
+            padding: 14px 20px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 15px;
+            background: var(--white);
+            border: 3px solid var(--black);
+            border-radius: 12px;
+            width: 280px;
+            box-shadow: 3px 3px 0 var(--black);
+        }
+
+        .newsletter-input:focus {
+            outline: none;
+            box-shadow: 3px 3px 0 var(--black), 0 0 0 2px var(--mint-deep);
+        }
+
+        .newsletter-btn {
+            padding: 14px 28px;
+            background: var(--black);
+            color: var(--white);
+            border: 3px solid var(--black);
+            border-radius: 12px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 3px 3px 0 var(--mint-deep);
+            transition: all 0.1s;
+        }
+
+        .newsletter-btn:hover {
+            transform: translate(1px, 1px);
+            box-shadow: 2px 2px 0 var(--mint-deep);
+        }
+
+        /* ============================================
+           FOOTER
+           ============================================ */
+        footer {
+            background: var(--black);
+            padding: 40px 24px;
+            border-radius: 24px 24px 0 0;
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .footer-logo {
+            font-family: 'Space Mono', monospace;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .footer-tagline {
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.15s;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 900px) {
+            .hero-inner { flex-direction: column; text-align: center; }
+            .hero h1 { font-size: 36px; }
+            .hero p { margin: 0 auto; }
+            .hero-stats { flex-direction: row; justify-content: center; }
+            .newsletter { flex-direction: column; text-align: center; padding: 32px; }
+            .newsletter-form { flex-direction: column; width: 100%; }
+            .newsletter-input { width: 100%; }
+            .footer-inner { flex-direction: column; gap: 20px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="header-inner">
+            <div class="logo">
+                <div class="logo-mark">📼</div>
+                <span class="logo-text">Y2K Garage Sale</span>
+            </div>
+            <nav class="nav">
+                <a href="#" class="nav-link">Saved</a>
+                <a href="#" class="nav-link">Alerts</a>
+                <a href="#" class="nav-btn">Sign Up</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-content">
+                <span class="hero-badge"><span class="dot"></span> Live Listings</span>
+                <h1>Curated Y2K Finds</h1>
+                <p>We scan Craigslist for the best nostalgic tech and toys. Only the good stuff makes it here.</p>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-card">
+                    <div class="number" id="stat-total">--</div>
+                    <div class="label">Total listings</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number" id="stat-categories">4</div>
+                    <div class="label">Categories</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CATEGORY NAV -->
+    <nav class="category-nav">
+        <div class="category-nav-inner">
+            <a href="#gaming" class="cat-btn gaming">Handheld Gaming</a>
+            <a href="#apple" class="cat-btn apple">Apple Classics</a>
+            <a href="#toys" class="cat-btn toys">Toys & Collectibles</a>
+            <a href="#phones" class="cat-btn phones">Phones & PDAs</a>
+        </div>
+    </nav>
+
+    <!-- MAIN -->
+    <main>
+        <!-- GAMING -->
+        <section id="gaming" class="section">
+            <div class="section-header">
+                <div class="section-title gaming">
+                    <div class="icon">🎮</div>
+                    <h2>Handheld Gaming <span class="count" id="gaming-count"></span></h2>
+                </div>
+            </div>
+            <div class="product-grid" id="gaming-grid">
+                <div class="loading-state">
+                    <div class="loading-spinner"></div>
+                    <div class="loading-text">Loading finds...</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- APPLE -->
+        <section id="apple" class="section">
+            <div class="section-header">
+                <div class="section-title apple">
+                    <div class="icon">🍎</div>
+                    <h2>Apple Classics <span class="count" id="apple-count"></span></h2>
+                </div>
+            </div>
+            <div class="product-grid" id="apple-grid">
+                <div class="loading-state">
+                    <div class="loading-spinner"></div>
+                    <div class="loading-text">Loading finds...</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TOYS -->
+        <section id="toys" class="section">
+            <div class="section-header">
+                <div class="section-title toys">
+                    <div class="icon">🧸</div>
+                    <h2>Toys & Collectibles <span class="count" id="toys-count"></span></h2>
+                </div>
+            </div>
+            <div class="product-grid" id="toys-grid">
+                <div class="loading-state">
+                    <div class="loading-spinner"></div>
+                    <div class="loading-text">Loading finds...</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEWSLETTER -->
+        <section class="newsletter">
+            <div class="newsletter-content">
+                <h3>Get the hot finds first</h3>
+                <p>Weekly email with the best Y2K deals before they're gone.</p>
+            </div>
+            <form class="newsletter-form">
+                <input type="email" class="newsletter-input" placeholder="Enter your email">
+                <button type="submit" class="newsletter-btn">Subscribe</button>
+            </form>
+        </section>
+
+        <!-- PHONES -->
+        <section id="phones" class="section">
+            <div class="section-header">
+                <div class="section-title phones">
+                    <div class="icon">📱</div>
+                    <h2>Phones & PDAs <span class="count" id="phones-count"></span></h2>
+                </div>
+            </div>
+            <div class="product-grid" id="phones-grid">
+                <div class="loading-state">
+                    <div class="loading-spinner"></div>
+                    <div class="loading-text">Loading finds...</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <span class="footer-logo">Y2K Garage Sale</span>
+                <span class="footer-tagline">· Powered by Craigslist</span>
+            </div>
+            <nav class="footer-links">
+                <a href="#">About</a>
+                <a href="#">Contact</a>
+                <a href="#">Submit a Find</a>
+            </nav>
+        </div>
+    </footer>
+
+    <script>
+    // ================================================
+    // CONFIG — Replace these with your Supabase creds
+    // ================================================
+    const SUPABASE_URL = 'YOUR_SUPABASE_URL';           // e.g. https://xxx.supabase.co
+    const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY'; // Safe — read-only via RLS
+
+    // Category configuration
+    const CATEGORIES = {
+        gaming: {
+            icon: '🎮',
+            label: 'Handheld Gaming',
+            color: 'gaming',
+            fallbackImages: [
+                'gameboy-color-purple.jpg',
+                'gba-sp-blue.jpg',
+                'tamagotchi-white.jpg',
+                'gameboy-dmg-gray.jpg'
+            ]
+        },
+        apple: {
+            icon: '🍎',
+            label: 'Apple Classics',
+            color: 'apple',
+            fallbackImages: [
+                'ipod-classic-silver.jpg',
+                'imac-g3-blue.jpg',
+                'ipod-mini-green.jpg',
+                'ibook-tangerine.jpg'
+            ]
+        },
+        toys: {
+            icon: '🧸',
+            label: 'Toys & Collectibles',
+            color: 'toys',
+            fallbackImages: [
+                'furby-original.jpg',
+                'furby-leopard.jpg',
+                'pokemon-base-set.jpg',
+                'polly-pocket.jpg'
+            ]
+        },
+        phones: {
+            icon: '📱',
+            label: 'Phones & PDAs',
+            color: 'phones',
+            fallbackImages: [
+                'razr-pink.jpg',
+                'nokia-3310-blue.jpg',
+                'palm-pilot.jpg',
+                'sidekick-ii.jpg'
+            ]
+        }
+    };
+
+    // Badge types for visual variety
+    const BADGES = [
+        { class: 'badge-hot', label: 'Hot' },
+        { class: 'badge-rare', label: 'Rare' },
+        { class: 'badge-deal', label: 'Deal' },
+        { class: 'badge-mint', label: 'Mint' }
+    ];
+
+    // ================================================
+    // HELPERS
+    // ================================================
+
+    function formatPrice(priceCents) {
+        if (!priceCents) return 'See listing';
+        return '$' + Math.round(priceCents / 100).toLocaleString();
+    }
+
+    function formatDate(dateStr) {
+        if (!dateStr) return '';
+        const date = new Date(dateStr);
+        const now = new Date();
+        const diffMs = now - date;
+        const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+        const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+        if (diffHours < 1) return 'Just now';
+        if (diffHours < 24) return diffHours + 'h ago';
+        if (diffDays < 7) return diffDays + 'd ago';
+        if (diffDays < 30) return Math.floor(diffDays / 7) + 'w ago';
+        return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+    }
+
+    function getBadge(index) {
+        return BADGES[index % BADGES.length];
+    }
+
+    // ================================================
+    // RENDER
+    // ================================================
+
+    function renderCard(listing, category, index) {
+        const config = CATEGORIES[category];
+        const price = formatPrice(listing.price_cents);
+        const city = escapeHtml(listing.city || listing.region || 'Unknown');
+        const date = formatDate(listing.posted_at || listing.scraped_at);
+        const fallbackImg = config.fallbackImages[index % config.fallbackImages.length];
+        const badge = getBadge(index);
+        const safeTitle = escapeHtml(listing.title);
+
+        const card = document.createElement('article');
+        card.className = 'product-card';
+        card.addEventListener('click', function() {
+            window.open(listing.url, '_blank');
+        });
+
+        card.innerHTML =
+            '<div class="product-image ' + config.color + '">' +
+                '<span class="badge ' + badge.class + '">' + badge.label + '</span>' +
+                '<img src="images/' + fallbackImg + '" alt="' + safeTitle + '">' +
+            '</div>' +
+            '<div class="product-info">' +
+                '<h3 class="product-title">' + safeTitle + '</h3>' +
+                '<div class="product-meta">' +
+                    '<span>' + city + '</span>' +
+                    '<span>' + date + '</span>' +
+                '</div>' +
+            '</div>' +
+            '<div class="product-footer">' +
+                '<span class="product-price">' + price + '</span>' +
+                '<button class="product-btn">View Deal</button>' +
+            '</div>';
+
+        // Stop propagation on button so it doesn't double-fire
+        card.querySelector('.product-btn').addEventListener('click', function(e) {
+            e.stopPropagation();
+            window.open(listing.url, '_blank');
+        });
+
+        return card;
+    }
+
+    function renderGrid(gridId, listings, category) {
+        var grid = document.getElementById(gridId);
+        var countEl = document.getElementById(category + '-count');
+
+        grid.innerHTML = '';
+
+        if (!listings || listings.length === 0) {
+            grid.innerHTML = '<div class="empty-state">No listings found yet. Check back soon!</div>';
+            if (countEl) countEl.textContent = '';
+            return;
+        }
+
+        if (countEl) countEl.textContent = '\u00b7 ' + listings.length + ' items';
+
+        listings.forEach(function(listing, i) {
+            grid.appendChild(renderCard(listing, category, i));
+        });
+    }
+
+    function showError(gridId) {
+        var grid = document.getElementById(gridId);
+        grid.innerHTML = '<div class="error-state">Could not load listings. Please try again later.</div>';
+    }
+
+    function updateHeroStats(total) {
+        document.getElementById('stat-total').textContent = total;
+    }
+
+    // ================================================
+    // FETCH & INIT
+    // ================================================
+
+    async function loadListings() {
+        if (SUPABASE_URL === 'YOUR_SUPABASE_URL' || SUPABASE_ANON_KEY === 'YOUR_SUPABASE_ANON_KEY') {
+            Object.keys(CATEGORIES).forEach(function(cat) {
+                var grid = document.getElementById(cat + '-grid');
+                grid.innerHTML = '<div class="empty-state">Connect Supabase to see live Craigslist listings here.</div>';
+            });
+            document.getElementById('stat-total').textContent = '0';
+            return;
+        }
+
+        var client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        try {
+            var result = await client
+                .from('listings')
+                .select('*')
+                .not('category', 'is', null)
+                .order('posted_at', { ascending: false });
+
+            if (result.error) throw result.error;
+
+            var data = result.data || [];
+
+            // Group by category
+            var grouped = {};
+            Object.keys(CATEGORIES).forEach(function(cat) { grouped[cat] = []; });
+
+            data.forEach(function(listing) {
+                if (grouped[listing.category]) {
+                    grouped[listing.category].push(listing);
+                }
+            });
+
+            // Render each category
+            var total = 0;
+            Object.keys(CATEGORIES).forEach(function(cat) {
+                renderGrid(cat + '-grid', grouped[cat], cat);
+                total += grouped[cat].length;
+            });
+
+            updateHeroStats(total);
+
+        } catch (err) {
+            console.error('Failed to load listings:', err);
+            Object.keys(CATEGORIES).forEach(function(cat) { showError(cat + '-grid'); });
+            document.getElementById('stat-total').textContent = '--';
+        }
+    }
+
+    // Smooth scroll for category nav
+    document.querySelectorAll('.cat-btn').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            var target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                var navHeight = document.querySelector('.category-nav').offsetHeight;
+                var targetPos = target.getBoundingClientRect().top + window.pageYOffset - navHeight - 16;
+                window.scrollTo({ top: targetPos, behavior: 'smooth' });
+            }
+        });
+    });
+
+    // Load on page ready
+    loadListings();
+    </script>
+</body>
+</html>
