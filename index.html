@@ -1269,6 +1269,30 @@
     // CAROUSEL (HOME VIEW)
     // ================================================
 
+    function interleavBySearchTerm(listings) {
+        // Group listings by search_term
+        var groups = {};
+        listings.forEach(function(l) {
+            var key = (l.search_term || '').toLowerCase().trim();
+            if (!groups[key]) groups[key] = [];
+            groups[key].push(l);
+        });
+
+        // Round-robin pick from each group
+        var keys = Object.keys(groups);
+        var result = [];
+        var maxLen = Math.max.apply(null, keys.map(function(k) { return groups[k].length; }));
+
+        for (var i = 0; i < maxLen; i++) {
+            for (var j = 0; j < keys.length; j++) {
+                if (i < groups[keys[j]].length) {
+                    result.push(groups[keys[j]][i]);
+                }
+            }
+        }
+        return result;
+    }
+
     function renderCarousel(carouselId, listings, category) {
         var carousel = document.getElementById(carouselId);
         var countEl = document.getElementById(category + '-count');
@@ -1283,10 +1307,13 @@
 
         if (countEl) countEl.textContent = '\u00b7 ' + listings.length + ' items';
 
+        // Interleave by search_term so carousel shows variety
+        var diversified = interleavBySearchTerm(listings);
+
         // Show limited cards in carousel
-        var shown = Math.min(listings.length, CAROUSEL_LIMIT);
+        var shown = Math.min(diversified.length, CAROUSEL_LIMIT);
         for (var i = 0; i < shown; i++) {
-            carousel.appendChild(renderCard(listings[i], category, i));
+            carousel.appendChild(renderCard(diversified[i], category, i));
         }
 
         // Add scroll arrows
