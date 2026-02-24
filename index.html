@@ -56,6 +56,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
+            text-decoration: none;
         }
 
         .logo-mark {
@@ -134,9 +135,7 @@
             gap: 48px;
         }
 
-        .hero-content {
-            flex: 1;
-        }
+        .hero-content { flex: 1; }
 
         .hero-badge {
             display: inline-flex;
@@ -237,6 +236,7 @@
             white-space: nowrap;
             transition: all 0.15s;
             box-shadow: 3px 3px 0 var(--black);
+            cursor: pointer;
         }
 
         .cat-btn:hover {
@@ -318,6 +318,7 @@
             border: 2px solid var(--black);
             border-radius: 8px;
             transition: all 0.15s;
+            white-space: nowrap;
         }
 
         .section-link:hover {
@@ -325,22 +326,68 @@
         }
 
         /* ============================================
-           PRODUCT GRID
+           CAROUSEL
            ============================================ */
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
+        .carousel-wrapper {
+            position: relative;
         }
 
-        @media (max-width: 1000px) {
-            .product-grid { grid-template-columns: repeat(3, 1fr); }
+        .product-carousel {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            padding-bottom: 4px;
         }
+
+        .product-carousel::-webkit-scrollbar {
+            display: none;
+        }
+
+        .product-carousel .product-card {
+            min-width: 260px;
+            max-width: 280px;
+            flex-shrink: 0;
+            scroll-snap-align: start;
+        }
+
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background: var(--white);
+            border: 3px solid var(--black);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 700;
+            box-shadow: 3px 3px 0 var(--black);
+            transition: all 0.1s;
+            z-index: 10;
+        }
+
+        .carousel-arrow:hover {
+            transform: translateY(-50%) translate(1px, 1px);
+            box-shadow: 2px 2px 0 var(--black);
+        }
+
+        .carousel-arrow.left { left: -16px; }
+        .carousel-arrow.right { right: -16px; }
 
         @media (max-width: 700px) {
-            .product-grid { grid-template-columns: repeat(2, 1fr); }
+            .carousel-arrow { display: none; }
         }
 
+        /* ============================================
+           PRODUCT CARD
+           ============================================ */
         .product-card {
             background: var(--white);
             border: 3px solid var(--black);
@@ -377,23 +424,6 @@
         .product-image.apple { background: var(--blush); }
         .product-image.toys { background: var(--butter); }
         .product-image.phones { background: var(--sky); }
-
-        .badge {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            padding: 5px 12px;
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            border-radius: 6px;
-            border: 2px solid var(--black);
-        }
-
-        .badge-hot { background: var(--blush-deep); color: var(--black); }
-        .badge-rare { background: var(--lavender-deep); color: var(--white); }
-        .badge-deal { background: var(--mint-deep); color: var(--black); }
-        .badge-mint { background: var(--sky-deep); color: var(--black); }
 
         .product-info {
             padding: 16px;
@@ -452,12 +482,92 @@
         }
 
         /* ============================================
-           LOADING STATE
+           FULL CATEGORY PAGE (GRID)
+           ============================================ */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        @media (max-width: 1000px) {
+            .product-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        @media (max-width: 700px) {
+            .product-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 450px) {
+            .product-grid { grid-template-columns: 1fr; }
+        }
+
+        .category-page-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 18px;
+            background: var(--white);
+            border: 3px solid var(--black);
+            border-radius: 10px;
+            text-decoration: none;
+            color: var(--black);
+            font-weight: 600;
+            font-size: 14px;
+            box-shadow: 3px 3px 0 var(--black);
+            transition: all 0.1s;
+        }
+
+        .back-btn:hover {
+            transform: translate(1px, 1px);
+            box-shadow: 2px 2px 0 var(--black);
+        }
+
+        .category-page-title {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .category-page-title .icon {
+            width: 52px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            border: 3px solid var(--black);
+            border-radius: 14px;
+            box-shadow: 3px 3px 0 var(--black);
+        }
+
+        .category-page-title h2 {
+            font-family: 'Space Mono', monospace;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .category-page-title .count {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--gray);
+        }
+
+        /* ============================================
+           LOADING & STATES
            ============================================ */
         .loading-state {
-            grid-column: 1 / -1;
             text-align: center;
             padding: 48px 24px;
+            width: 100%;
         }
 
         .loading-spinner {
@@ -481,19 +591,12 @@
             font-weight: 500;
         }
 
-        .error-state {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 48px 24px;
-            color: var(--gray);
-        }
-
         .empty-state {
-            grid-column: 1 / -1;
             text-align: center;
             padding: 48px 24px;
             color: var(--gray);
             font-size: 15px;
+            width: 100%;
         }
 
         /* ============================================
@@ -636,10 +739,10 @@
     <!-- HEADER -->
     <header>
         <div class="header-inner">
-            <div class="logo">
+            <a href="#" class="logo" onclick="navigateHome(event)">
                 <div class="logo-mark">📼</div>
                 <span class="logo-text">Y2K Garage Sale</span>
-            </div>
+            </a>
             <nav class="nav">
                 <a href="#" class="nav-link">Saved</a>
                 <a href="#" class="nav-link">Alerts</a>
@@ -672,59 +775,59 @@
     <!-- CATEGORY NAV -->
     <nav class="category-nav">
         <div class="category-nav-inner">
-            <a href="#gaming" class="cat-btn gaming">Handheld Gaming</a>
-            <a href="#apple" class="cat-btn apple">Apple Classics</a>
-            <a href="#toys" class="cat-btn toys">Toys & Collectibles</a>
-            <a href="#phones" class="cat-btn phones">Phones & PDAs</a>
+            <a href="#category/gaming" class="cat-btn gaming">Handheld Gaming</a>
+            <a href="#category/apple" class="cat-btn apple">Apple Classics</a>
+            <a href="#category/toys" class="cat-btn toys">Toys & Collectibles</a>
+            <a href="#category/phones" class="cat-btn phones">Phones & PDAs</a>
         </div>
     </nav>
 
-    <!-- MAIN -->
-    <main>
+    <!-- HOME VIEW -->
+    <main id="home-view">
         <!-- GAMING -->
-        <section id="gaming" class="section">
+        <section class="section">
             <div class="section-header">
                 <div class="section-title gaming">
                     <div class="icon">🎮</div>
                     <h2>Handheld Gaming <span class="count" id="gaming-count"></span></h2>
                 </div>
+                <a href="#category/gaming" class="section-link">View all &rarr;</a>
             </div>
-            <div class="product-grid" id="gaming-grid">
-                <div class="loading-state">
-                    <div class="loading-spinner"></div>
-                    <div class="loading-text">Loading finds...</div>
+            <div class="carousel-wrapper">
+                <div class="product-carousel" id="gaming-carousel">
+                    <div class="loading-state"><div class="loading-spinner"></div><div class="loading-text">Loading finds...</div></div>
                 </div>
             </div>
         </section>
 
         <!-- APPLE -->
-        <section id="apple" class="section">
+        <section class="section">
             <div class="section-header">
                 <div class="section-title apple">
                     <div class="icon">🍎</div>
                     <h2>Apple Classics <span class="count" id="apple-count"></span></h2>
                 </div>
+                <a href="#category/apple" class="section-link">View all &rarr;</a>
             </div>
-            <div class="product-grid" id="apple-grid">
-                <div class="loading-state">
-                    <div class="loading-spinner"></div>
-                    <div class="loading-text">Loading finds...</div>
+            <div class="carousel-wrapper">
+                <div class="product-carousel" id="apple-carousel">
+                    <div class="loading-state"><div class="loading-spinner"></div><div class="loading-text">Loading finds...</div></div>
                 </div>
             </div>
         </section>
 
         <!-- TOYS -->
-        <section id="toys" class="section">
+        <section class="section">
             <div class="section-header">
                 <div class="section-title toys">
                     <div class="icon">🧸</div>
                     <h2>Toys & Collectibles <span class="count" id="toys-count"></span></h2>
                 </div>
+                <a href="#category/toys" class="section-link">View all &rarr;</a>
             </div>
-            <div class="product-grid" id="toys-grid">
-                <div class="loading-state">
-                    <div class="loading-spinner"></div>
-                    <div class="loading-text">Loading finds...</div>
+            <div class="carousel-wrapper">
+                <div class="product-carousel" id="toys-carousel">
+                    <div class="loading-state"><div class="loading-spinner"></div><div class="loading-text">Loading finds...</div></div>
                 </div>
             </div>
         </section>
@@ -742,20 +845,35 @@
         </section>
 
         <!-- PHONES -->
-        <section id="phones" class="section">
+        <section class="section">
             <div class="section-header">
                 <div class="section-title phones">
                     <div class="icon">📱</div>
                     <h2>Phones & PDAs <span class="count" id="phones-count"></span></h2>
                 </div>
+                <a href="#category/phones" class="section-link">View all &rarr;</a>
             </div>
-            <div class="product-grid" id="phones-grid">
-                <div class="loading-state">
-                    <div class="loading-spinner"></div>
-                    <div class="loading-text">Loading finds...</div>
+            <div class="carousel-wrapper">
+                <div class="product-carousel" id="phones-carousel">
+                    <div class="loading-state"><div class="loading-spinner"></div><div class="loading-text">Loading finds...</div></div>
                 </div>
             </div>
         </section>
+    </main>
+
+    <!-- CATEGORY PAGE VIEW (hidden by default) -->
+    <main id="category-view" style="display:none">
+        <div class="category-page-header">
+            <a href="#" class="back-btn" onclick="navigateHome(event)">&larr; Back</a>
+            <div class="category-page-title" id="category-page-title">
+                <div class="icon" id="category-page-icon"></div>
+                <div>
+                    <h2 id="category-page-name"></h2>
+                    <span class="count" id="category-page-count"></span>
+                </div>
+            </div>
+        </div>
+        <div class="product-grid" id="category-grid"></div>
     </main>
 
     <!-- FOOTER -->
@@ -763,7 +881,7 @@
         <div class="footer-inner">
             <div class="footer-brand">
                 <span class="footer-logo">Y2K Garage Sale</span>
-                <span class="footer-tagline">· Powered by Craigslist</span>
+                <span class="footer-tagline">&middot; Powered by Craigslist</span>
             </div>
             <nav class="footer-links">
                 <a href="#">About</a>
@@ -775,70 +893,68 @@
 
     <script>
     // ================================================
-    // CONFIG — Replace these with your Supabase creds
+    // CONFIG
     // ================================================
-    const SUPABASE_URL = 'https://wmcentdwysgbfbdfvfnb.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndtY2VudGR3eXNnYmZiZGZ2Zm5iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE5MzQ1MzcsImV4cCI6MjA4NzUxMDUzN30.twwzFudMBxAyHt6Fea60xcgsl-utQDbfFdDGd0dTGE8';
+    var SUPABASE_URL = 'https://wmcentdwysgbfbdfvfnb.supabase.co';
+    var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndtY2VudGR3eXNnYmZiZGZ2Zm5iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE5MzQ1MzcsImV4cCI6MjA4NzUxMDUzN30.twwzFudMBxAyHt6Fea60xcgsl-utQDbfFdDGd0dTGE8';
 
-    // Category configuration
-    const CATEGORIES = {
-        gaming: {
-            icon: '🎮',
-            label: 'Handheld Gaming',
-            color: 'gaming',
-            fallbackImages: [
-                'gameboy-color-purple.jpg',
-                'gba-sp-blue.jpg',
-                'tamagotchi-white.jpg',
-                'gameboy-dmg-gray.jpg'
-            ]
-        },
-        apple: {
-            icon: '🍎',
-            label: 'Apple Classics',
-            color: 'apple',
-            fallbackImages: [
-                'ipod-classic-silver.jpg',
-                'imac-g3-blue.jpg',
-                'ipod-mini-green.jpg',
-                'ibook-tangerine.jpg'
-            ]
-        },
-        toys: {
-            icon: '🧸',
-            label: 'Toys & Collectibles',
-            color: 'toys',
-            fallbackImages: [
-                'furby-original.jpg',
-                'furby-leopard.jpg',
-                'pokemon-base-set.jpg',
-                'polly-pocket.jpg'
-            ]
-        },
-        phones: {
-            icon: '📱',
-            label: 'Phones & PDAs',
-            color: 'phones',
-            fallbackImages: [
-                'razr-pink.jpg',
-                'nokia-3310-blue.jpg',
-                'palm-pilot.jpg',
-                'sidekick-ii.jpg'
-            ]
-        }
+    var CATEGORIES = {
+        gaming: { icon: '🎮', label: 'Handheld Gaming', color: 'gaming' },
+        apple:  { icon: '🍎', label: 'Apple Classics',  color: 'apple' },
+        toys:   { icon: '🧸', label: 'Toys & Collectibles', color: 'toys' },
+        phones: { icon: '📱', label: 'Phones & PDAs',   color: 'phones' }
     };
 
-    // Badge types for visual variety
-    const BADGES = [
-        { class: 'badge-hot', label: 'Hot' },
-        { class: 'badge-rare', label: 'Rare' },
-        { class: 'badge-deal', label: 'Deal' },
-        { class: 'badge-mint', label: 'Mint' }
-    ];
+    // search_term → image(s) mapping
+    // Each listing's search_term maps to the most relevant product photo(s)
+    var SEARCH_TERM_IMAGES = {
+        'game boy':      ['gameboy-color-purple.jpg', 'gameboy-dmg-gray.jpg'],
+        'gameboy':       ['gameboy-color-purple.jpg', 'gameboy-dmg-gray.jpg'],
+        'gba':           ['gba-sp-blue.jpg'],
+        'tamagotchi':    ['tamagotchi-white.jpg'],
+        'ipod':          ['ipod-classic-silver.jpg', 'ipod-mini-green.jpg'],
+        'imac g3':       ['imac-g3-blue.jpg'],
+        'imac':          ['imac-g3-blue.jpg'],
+        'ibook':         ['ibook-tangerine.jpg'],
+        'furby':         ['furby-original.jpg', 'furby-leopard.jpg'],
+        'pokemon cards': ['pokemon-base-set.jpg'],
+        'pokemon':       ['pokemon-base-set.jpg'],
+        'polly pocket':  ['polly-pocket.jpg'],
+        'razr':          ['razr-pink.jpg'],
+        'nokia 3310':    ['nokia-3310-blue.jpg'],
+        'nokia':         ['nokia-3310-blue.jpg'],
+        'sidekick':      ['sidekick-ii.jpg'],
+        'palm pilot':    ['palm-pilot.jpg'],
+        'palm':          ['palm-pilot.jpg']
+    };
+
+    // Category-level fallback (only used if search_term doesn't match)
+    var CATEGORY_FALLBACK_IMAGES = {
+        gaming: ['gameboy-color-purple.jpg', 'gba-sp-blue.jpg', 'tamagotchi-white.jpg', 'gameboy-dmg-gray.jpg'],
+        apple:  ['ipod-classic-silver.jpg', 'imac-g3-blue.jpg', 'ipod-mini-green.jpg', 'ibook-tangerine.jpg'],
+        toys:   ['furby-original.jpg', 'furby-leopard.jpg', 'pokemon-base-set.jpg', 'polly-pocket.jpg'],
+        phones: ['razr-pink.jpg', 'nokia-3310-blue.jpg', 'palm-pilot.jpg', 'sidekick-ii.jpg']
+    };
+
+    var CAROUSEL_LIMIT = 8;
+
+    // Global data store
+    var allListings = {};
 
     // ================================================
     // HELPERS
     // ================================================
+
+    function getImageForListing(listing, category, index) {
+        var searchTerm = (listing.search_term || '').toLowerCase().trim();
+        var images = SEARCH_TERM_IMAGES[searchTerm];
+        if (images && images.length > 0) {
+            return images[index % images.length];
+        }
+        // Fallback: cycle through category images
+        var fallback = CATEGORY_FALLBACK_IMAGES[category] || [];
+        return fallback[index % fallback.length] || 'gameboy-color-purple.jpg';
+    }
 
     function formatPrice(priceCents) {
         if (!priceCents) return 'See listing';
@@ -847,12 +963,11 @@
 
     function formatDate(dateStr) {
         if (!dateStr) return '';
-        const date = new Date(dateStr);
-        const now = new Date();
-        const diffMs = now - date;
-        const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
-        const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-
+        var date = new Date(dateStr);
+        var now = new Date();
+        var diffMs = now - date;
+        var diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+        var diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
         if (diffHours < 1) return 'Just now';
         if (diffHours < 24) return diffHours + 'h ago';
         if (diffDays < 7) return diffDays + 'd ago';
@@ -862,29 +977,24 @@
 
     function escapeHtml(str) {
         if (!str) return '';
-        const div = document.createElement('div');
+        var div = document.createElement('div');
         div.textContent = str;
         return div.innerHTML;
     }
 
-    function getBadge(index) {
-        return BADGES[index % BADGES.length];
-    }
-
     // ================================================
-    // RENDER
+    // RENDER CARD
     // ================================================
 
     function renderCard(listing, category, index) {
-        const config = CATEGORIES[category];
-        const price = formatPrice(listing.price_cents);
-        const city = escapeHtml(listing.city || listing.region || 'Unknown');
-        const date = formatDate(listing.posted_at || listing.scraped_at);
-        const fallbackImg = config.fallbackImages[index % config.fallbackImages.length];
-        const badge = getBadge(index);
-        const safeTitle = escapeHtml(listing.title);
+        var config = CATEGORIES[category];
+        var price = formatPrice(listing.price_cents);
+        var city = escapeHtml(listing.city || listing.region || 'Unknown');
+        var date = formatDate(listing.posted_at || listing.scraped_at);
+        var image = getImageForListing(listing, category, index);
+        var safeTitle = escapeHtml(listing.title);
 
-        const card = document.createElement('article');
+        var card = document.createElement('article');
         card.className = 'product-card';
         card.addEventListener('click', function() {
             window.open(listing.url, '_blank');
@@ -892,8 +1002,7 @@
 
         card.innerHTML =
             '<div class="product-image ' + config.color + '">' +
-                '<span class="badge ' + badge.class + '">' + badge.label + '</span>' +
-                '<img src="images/' + fallbackImg + '" alt="' + safeTitle + '">' +
+                '<img src="images/' + image + '" alt="' + safeTitle + '">' +
             '</div>' +
             '<div class="product-info">' +
                 '<h3 class="product-title">' + safeTitle + '</h3>' +
@@ -907,7 +1016,6 @@
                 '<button class="product-btn">View Deal</button>' +
             '</div>';
 
-        // Stop propagation on button so it doesn't double-fire
         card.querySelector('.product-btn').addEventListener('click', function(e) {
             e.stopPropagation();
             window.open(listing.url, '_blank');
@@ -916,48 +1024,133 @@
         return card;
     }
 
-    function renderGrid(gridId, listings, category) {
-        var grid = document.getElementById(gridId);
+    // ================================================
+    // CAROUSEL (HOME VIEW)
+    // ================================================
+
+    function renderCarousel(carouselId, listings, category) {
+        var carousel = document.getElementById(carouselId);
         var countEl = document.getElementById(category + '-count');
 
-        grid.innerHTML = '';
+        carousel.innerHTML = '';
 
         if (!listings || listings.length === 0) {
-            grid.innerHTML = '<div class="empty-state">No listings found yet. Check back soon!</div>';
+            carousel.innerHTML = '<div class="empty-state">No listings found yet. Check back soon!</div>';
             if (countEl) countEl.textContent = '';
             return;
         }
 
         if (countEl) countEl.textContent = '\u00b7 ' + listings.length + ' items';
 
-        listings.forEach(function(listing, i) {
-            grid.appendChild(renderCard(listing, category, i));
+        // Show limited cards in carousel
+        var shown = Math.min(listings.length, CAROUSEL_LIMIT);
+        for (var i = 0; i < shown; i++) {
+            carousel.appendChild(renderCard(listings[i], category, i));
+        }
+
+        // Add scroll arrows
+        addCarouselArrows(carousel);
+    }
+
+    function addCarouselArrows(carousel) {
+        var wrapper = carousel.parentElement;
+
+        var leftArrow = document.createElement('button');
+        leftArrow.className = 'carousel-arrow left';
+        leftArrow.innerHTML = '&larr;';
+        leftArrow.addEventListener('click', function() {
+            carousel.scrollBy({ left: -300, behavior: 'smooth' });
         });
+
+        var rightArrow = document.createElement('button');
+        rightArrow.className = 'carousel-arrow right';
+        rightArrow.innerHTML = '&rarr;';
+        rightArrow.addEventListener('click', function() {
+            carousel.scrollBy({ left: 300, behavior: 'smooth' });
+        });
+
+        wrapper.appendChild(leftArrow);
+        wrapper.appendChild(rightArrow);
     }
 
-    function showError(gridId) {
-        var grid = document.getElementById(gridId);
-        grid.innerHTML = '<div class="error-state">Could not load listings. Please try again later.</div>';
+    // ================================================
+    // CATEGORY PAGE (FULL GRID VIEW)
+    // ================================================
+
+    function showCategoryPage(category) {
+        var config = CATEGORIES[category];
+        if (!config) return;
+
+        var listings = allListings[category] || [];
+
+        // Update header
+        var titleEl = document.getElementById('category-page-title');
+        titleEl.className = 'category-page-title ' + category;
+
+        document.getElementById('category-page-icon').innerHTML = config.icon;
+        document.getElementById('category-page-icon').style.background =
+            getComputedStyle(document.documentElement).getPropertyValue(
+                category === 'gaming' ? '--lavender' :
+                category === 'apple' ? '--blush' :
+                category === 'toys' ? '--butter' : '--sky'
+            );
+        document.getElementById('category-page-name').textContent = config.label;
+        document.getElementById('category-page-count').textContent = listings.length + ' listings';
+
+        // Render grid
+        var grid = document.getElementById('category-grid');
+        grid.innerHTML = '';
+
+        if (listings.length === 0) {
+            grid.innerHTML = '<div class="empty-state">No listings found yet.</div>';
+        } else {
+            listings.forEach(function(listing, i) {
+                grid.appendChild(renderCard(listing, category, i));
+            });
+        }
+
+        // Toggle views
+        document.getElementById('home-view').style.display = 'none';
+        document.getElementById('category-view').style.display = 'block';
+
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'instant' });
     }
 
-    function updateHeroStats(total) {
-        document.getElementById('stat-total').textContent = total;
+    function showHomePage() {
+        document.getElementById('home-view').style.display = 'block';
+        document.getElementById('category-view').style.display = 'none';
     }
+
+    function navigateHome(e) {
+        e.preventDefault();
+        window.location.hash = '';
+        showHomePage();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ================================================
+    // ROUTING
+    // ================================================
+
+    function handleRoute() {
+        var hash = window.location.hash;
+        var match = hash.match(/^#category\/(\w+)$/);
+
+        if (match && CATEGORIES[match[1]]) {
+            showCategoryPage(match[1]);
+        } else {
+            showHomePage();
+        }
+    }
+
+    window.addEventListener('hashchange', handleRoute);
 
     // ================================================
     // FETCH & INIT
     // ================================================
 
     async function loadListings() {
-        if (SUPABASE_URL === 'YOUR_SUPABASE_URL' || SUPABASE_ANON_KEY === 'YOUR_SUPABASE_ANON_KEY') {
-            Object.keys(CATEGORIES).forEach(function(cat) {
-                var grid = document.getElementById(cat + '-grid');
-                grid.innerHTML = '<div class="empty-state">Connect Supabase to see live Craigslist listings here.</div>';
-            });
-            document.getElementById('stat-total').textContent = '0';
-            return;
-        }
-
         var client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         try {
@@ -972,43 +1165,35 @@
             var data = result.data || [];
 
             // Group by category
-            var grouped = {};
-            Object.keys(CATEGORIES).forEach(function(cat) { grouped[cat] = []; });
+            Object.keys(CATEGORIES).forEach(function(cat) { allListings[cat] = []; });
 
             data.forEach(function(listing) {
-                if (grouped[listing.category]) {
-                    grouped[listing.category].push(listing);
+                if (allListings[listing.category]) {
+                    allListings[listing.category].push(listing);
                 }
             });
 
-            // Render each category
+            // Render carousels on home page
             var total = 0;
             Object.keys(CATEGORIES).forEach(function(cat) {
-                renderGrid(cat + '-grid', grouped[cat], cat);
-                total += grouped[cat].length;
+                renderCarousel(cat + '-carousel', allListings[cat], cat);
+                total += allListings[cat].length;
             });
 
-            updateHeroStats(total);
+            document.getElementById('stat-total').textContent = total.toLocaleString();
+
+            // If we loaded with a category hash, show that page
+            handleRoute();
 
         } catch (err) {
             console.error('Failed to load listings:', err);
-            Object.keys(CATEGORIES).forEach(function(cat) { showError(cat + '-grid'); });
+            Object.keys(CATEGORIES).forEach(function(cat) {
+                var carousel = document.getElementById(cat + '-carousel');
+                carousel.innerHTML = '<div class="empty-state">Could not load listings. Please try again later.</div>';
+            });
             document.getElementById('stat-total').textContent = '--';
         }
     }
-
-    // Smooth scroll for category nav
-    document.querySelectorAll('.cat-btn').forEach(function(btn) {
-        btn.addEventListener('click', function(e) {
-            e.preventDefault();
-            var target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                var navHeight = document.querySelector('.category-nav').offsetHeight;
-                var targetPos = target.getBoundingClientRect().top + window.pageYOffset - navHeight - 16;
-                window.scrollTo({ top: targetPos, behavior: 'smooth' });
-            }
-        });
-    });
 
     // Load on page ready
     loadListings();
