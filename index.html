@@ -347,10 +347,24 @@
         }
 
         .product-carousel .product-card {
-            min-width: 260px;
-            max-width: 280px;
+            min-width: calc((100% - 60px) / 4);
+            max-width: calc((100% - 60px) / 4);
             flex-shrink: 0;
             scroll-snap-align: start;
+        }
+
+        @media (max-width: 1000px) {
+            .product-carousel .product-card {
+                min-width: calc((100% - 40px) / 3);
+                max-width: calc((100% - 40px) / 3);
+            }
+        }
+
+        @media (max-width: 700px) {
+            .product-carousel .product-card {
+                min-width: calc((100% - 20px) / 2);
+                max-width: calc((100% - 20px) / 2);
+            }
         }
 
         .carousel-arrow {
