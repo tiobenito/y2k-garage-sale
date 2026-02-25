@@ -1149,19 +1149,19 @@
     // search_term → image(s) mapping
     // Each listing's search_term maps to the most relevant product photo(s)
     var SEARCH_TERM_IMAGES = {
-        'game boy':      ['gameboy-color-purple.jpg', 'gameboy-dmg-gray.jpg'],
-        'gameboy':       ['gameboy-color-purple.jpg', 'gameboy-dmg-gray.jpg'],
-        'gba':           ['gba-sp-blue.jpg'],
-        'tamagotchi':    ['tamagotchi-white.jpg'],
-        'ipod':          ['ipod-classic-silver.jpg', 'ipod-mini-green.jpg'],
-        'imac g3':       ['imac-g3-blue.jpg'],
-        'imac':          ['imac-g3-blue.jpg'],
+        'game boy':      ['gameboy-color-purple.jpg', 'gameboy-dmg-gray.jpg', 'gameboy-color-yellow.jpg', 'gba-purple.jpg'],
+        'gameboy':       ['gameboy-color-purple.jpg', 'gameboy-dmg-gray.jpg', 'gameboy-color-yellow.jpg', 'gba-purple.jpg'],
+        'gba':           ['gba-sp-blue.jpg', 'gba-purple.jpg'],
+        'tamagotchi':    ['tamagotchi-white.jpg', 'tamagotchi-classic.jpg'],
+        'ipod':          ['ipod-classic-silver.jpg', 'ipod-nano-white.jpg', 'ipod-nano-dock.jpg', 'ipod-shuffle-yellow.jpg', 'ipod-shuffle-white.jpg', 'ipod-mini-green.jpg'],
+        'imac g3':       ['imac-g3-blue.jpg', 'imac-g3-tangerine.jpg'],
+        'imac':          ['imac-g3-blue.jpg', 'imac-g3-tangerine.jpg'],
         'ibook':         ['ibook-tangerine.jpg'],
         'furby':         ['furby-original.jpg', 'furby-leopard.jpg'],
-        'pokemon cards': ['pokemon-base-set.jpg'],
-        'pokemon':       ['pokemon-base-set.jpg'],
+        'pokemon cards': ['pokemon-base-set.jpg', 'pokemon-collection.jpg', 'pokemon-sealed-packs.jpg'],
+        'pokemon':       ['pokemon-base-set.jpg', 'pokemon-collection.jpg', 'pokemon-sealed-packs.jpg'],
         'polly pocket':  ['polly-pocket.jpg'],
-        'razr':          ['razr-pink.jpg'],
+        'razr':          ['razr-pink.jpg', 'razr-v3-silver.jpg'],
         'nokia 3310':    ['nokia-3310-blue.jpg'],
         'nokia':         ['nokia-3310-blue.jpg'],
         'sidekick':      ['sidekick-ii.jpg'],
@@ -1171,10 +1171,10 @@
 
     // Category-level fallback (only used if search_term doesn't match)
     var CATEGORY_FALLBACK_IMAGES = {
-        gaming: ['gameboy-color-purple.jpg', 'gba-sp-blue.jpg', 'tamagotchi-white.jpg', 'gameboy-dmg-gray.jpg'],
-        apple:  ['ipod-classic-silver.jpg', 'imac-g3-blue.jpg', 'ipod-mini-green.jpg', 'ibook-tangerine.jpg'],
-        toys:   ['furby-original.jpg', 'furby-leopard.jpg', 'pokemon-base-set.jpg', 'polly-pocket.jpg'],
-        phones: ['razr-pink.jpg', 'nokia-3310-blue.jpg', 'palm-pilot.jpg', 'sidekick-ii.jpg']
+        gaming: ['gameboy-color-purple.jpg', 'gba-sp-blue.jpg', 'tamagotchi-white.jpg', 'gameboy-dmg-gray.jpg', 'gameboy-color-yellow.jpg', 'gba-purple.jpg', 'tamagotchi-classic.jpg'],
+        apple:  ['ipod-classic-silver.jpg', 'imac-g3-blue.jpg', 'ipod-nano-white.jpg', 'ipod-nano-dock.jpg', 'ipod-shuffle-yellow.jpg', 'ipod-shuffle-white.jpg', 'ibook-tangerine.jpg', 'imac-g3-tangerine.jpg'],
+        toys:   ['furby-original.jpg', 'furby-leopard.jpg', 'pokemon-base-set.jpg', 'polly-pocket.jpg', 'pokemon-collection.jpg', 'pokemon-sealed-packs.jpg'],
+        phones: ['razr-pink.jpg', 'nokia-3310-blue.jpg', 'palm-pilot.jpg', 'sidekick-ii.jpg', 'razr-v3-silver.jpg']
     };
 
     var CAROUSEL_LIMIT = 8;
