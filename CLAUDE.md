@@ -32,5 +32,5 @@ Curated rare/nostalgic Y2K tech deals — Game Boys, iPods, Furbys, Pokemon card
 ## Notes
 
 - This is the **deploy repo** (static site for Vercel)
-- The scraper code lives separately at `~/cc/personal/pc/vibing/garage-sale/`
+- The scraper code lives separately in the private personal docs repo (archived under the garage-sale scraper folder), not in this deploy repo
 - Image mappings are in `SEARCH_TERM_IMAGES` and `CATEGORY_FALLBACK_IMAGES` objects in index.html
